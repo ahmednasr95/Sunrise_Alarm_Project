@@ -3,9 +3,9 @@
 
 
 int main() {
-app_init();
+APP_Initialize();
 while(1){
-app_main();
+APP_Main_Function();
 }
 	return 0;
 }

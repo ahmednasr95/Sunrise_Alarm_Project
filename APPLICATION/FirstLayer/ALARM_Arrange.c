@@ -1,9 +1,9 @@
-#include "Seif.h"
+#include "ALARM_Arrange.h"
 
 extern UINT8_t usr_def_alarms;
 extern alarm_struct alarm_ptr_arr[NUM_OF_ALARMS];
 extern bool Alarm_1_Fire_Flag ,Alarm_2_Fire_Flag ,Alarm_3_Fire_Flag ;
-
+extern UINT16_t Current_Time;
 /* Tested for king EMBO*/
 ERROR_STATE Show_Alarms(){
 	ERROR_STATE state_error = SUCCESS;
@@ -22,7 +22,8 @@ ERROR_STATE Show_Alarms(){
 			index++;
 			LCD_LINE_position(Rows,1);
 			LCD_Write_String("- ");
-			printAlarm(alarm_ptr_arr[i].minutes,alarm_ptr_arr[i].seconds,Rows,2);
+			UINT16_t remaining = alarm_ptr_arr[i].Fire_Time-Current_Time;
+			printAlarm(((UINT8_t)remaining/60),((UINT8_t)remaining%60),Rows,2);
 			Rows++;
 			LCD_LINE_position(Rows,0);
 		}
@@ -79,6 +80,7 @@ void erase(UINT16_t reading){
 		}
 		alarm_ptr_arr[shift_index].minutes = 0;
 		alarm_ptr_arr[shift_index].seconds = 0;
+		alarm_ptr_arr[shift_index].Fire_Time=0;
 	}
 	else if(reading==2){
 		if (usr_def_alarms==NUM_OF_ALARMS){
@@ -96,7 +98,7 @@ void erase(UINT16_t reading){
 		LCD_Write_String("ALARM DELETED");
 		LCD_LINE_position(LCD_LINE2,0);
 		LCD_Write_String("SUCCESSFULLY");
-		_delay_ms(2000);
+		_delay_ms(1500);
 	}
 	LCD_Clear();
 }

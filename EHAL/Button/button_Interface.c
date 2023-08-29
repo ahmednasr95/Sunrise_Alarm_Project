@@ -17,7 +17,7 @@ ERROR_STATE BTN_pressed(DIO_Port port, DIO_Pin pin, bool* btn_state){
 		DIO_GetPin_Value(port, pin, &Btn_clicked);
 	}
 	//return_value =LOW;
-	_delay_ms(60);
+	_delay_ms(30);
 	while((Btn_clicked) == LOW){
 		return_value =HIGH;
 		DIO_GetPin_Value(port, pin, &Btn_clicked);

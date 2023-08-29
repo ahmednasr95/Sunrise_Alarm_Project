@@ -21,6 +21,21 @@ ERROR_STATE LCD_Initialize(void)
 	_delay_ms(10);
 	return state_error;
 }
+
+ERROR_STATE LCD_Curser_OFF(void)
+{
+	ERROR_STATE state_error = SUCCESS;
+	LCD_Write_Command(0x0C);
+	return state_error;
+}
+
+ERROR_STATE LCD_Curser_ON(void)
+{
+	ERROR_STATE state_error = SUCCESS;
+	LCD_Write_Command(0x0F);
+	return state_error;
+}
+
 ERROR_STATE LCD_Clear(void)
 {
 	ERROR_STATE state_error = SUCCESS;
@@ -132,40 +147,6 @@ ERROR_STATE LCD_Write_Number(SINT64_t number)
 	return state_error;
 }
 
-ERROR_STATE LCD_Write_FloatNumber(fint64_t Fnumber)
-{
-	ERROR_STATE state_error = SUCCESS;
-	if(Fnumber<0){
-		LCD_Write_Character('-');
-		Fnumber*=(-1);
-	}
-	SINT64_t intfnumber = (SINT64_t)Fnumber;
-	LCD_Write_Number(intfnumber);
-
-	SINT64_t decimalp = ((Fnumber - (fint64_t)intfnumber) * pow(10, DICIMAL_POINT_ACCURACY));
-	SINT64_t num = decimalp;
-	UINT16_t digit = 0,ref_numb =DICIMAL_POINT_ACCURACY , ref_flag=0;
-	while(num != 0){
-		if(num%10 == 0 && !ref_flag){
-			ref_numb--;
-			decimalp/=10;
-			}else{
-			ref_flag =1;
-			digit++;
-		}
-		
-		num/=10;
-	}
-	if(decimalp != 0){
-		LCD_Write_Character('.');
-		while(digit<ref_numb){
-			LCD_Write_Character('0');
-			digit++;
-		}
-		LCD_Write_Number(decimalp);
-	}
-	return state_error;
-}
 
 /*
 Inputs:	row and column

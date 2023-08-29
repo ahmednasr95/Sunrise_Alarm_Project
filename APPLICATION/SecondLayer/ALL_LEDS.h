@@ -2,8 +2,6 @@
 #ifndef ALL_LEDS_H_
 #define ALL_LEDS_H_
 
-#include "CPU_Configuration.h"
-
 #include "BLUE_LED_Private.h"
 #include "RED_LED_Private.h"
 #include "GREEN_LED_Private.h"

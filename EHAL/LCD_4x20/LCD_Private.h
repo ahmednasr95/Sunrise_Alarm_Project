@@ -32,6 +32,8 @@ typedef enum{
 
 // Function Prototype:
 ERROR_STATE LCD_Initialize(void);
+ERROR_STATE LCD_Curser_OFF(void);
+ERROR_STATE LCD_Curser_ON(void);
 ERROR_STATE LCD_Clear(void);
 ERROR_STATE LCD_Write_Command(UINT8_t command);
 ERROR_STATE LCD_Write_Character(UINT8_t character);

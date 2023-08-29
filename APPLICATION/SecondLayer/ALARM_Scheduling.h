@@ -1,7 +1,7 @@
 
 
-#ifndef AHMED_NASR_H_
-#define AHMED_NASR_H_
+#ifndef ALARM_SCHEDULING_H_
+#define ALARM_SCHEDULING_H_
 
 /*required drivers*/
 #include "LCD_Private.h"
@@ -55,4 +55,4 @@ ERROR_STATE printAlarm(UINT8_t minutes, UINT8_t seconds,LCD_LINES Line_Pos, UINT
 
 ERROR_STATE alarm_scheduler(void);
 
-#endif /* AHMED_NASR_H_ */
+#endif /* ALARM_SCHEDULING_H_ */

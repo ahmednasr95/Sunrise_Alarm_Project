@@ -1,5 +1,5 @@
 
-#include "mbabbe.h"
+#include "ALARM_Actions.h"
 
 UINT16_t Timing_array[3];
 UINT16_t Current_Time=0,neg_counter=0,TEN_Secs_Counter=10;
@@ -17,7 +17,6 @@ void Alarm_Action(){
 	LCD_Write_String("!! ALARM !!");
 	while (reading<550)
 	{
-		//printAlarm(((UINT8_t)Current_Time/60),((UINT8_t)Current_Time%60),LCD_LINE2,15);
 		LDR_Read(&reading);
 		if (TEN_Secs_Counter>=10){
 			ALL_LEDS_ON();
@@ -31,23 +30,29 @@ void Alarm_Action(){
 	ALL_LEDS_OFF();
 	if(Alarm_1_Fire_Flag){
 		erase(1);
+		if(Alarm_2_Fire_Flag){
+			erase(1);
+			if(Alarm_3_Fire_Flag){
+				erase(1);
+			}
+		}
 	}
-	if(Alarm_2_Fire_Flag){
-		erase(2);
-	}
-	if(Alarm_3_Fire_Flag){
-		erase(3);
-	}
+
+
 	Alarm_1_Fire_Flag =LOW;
 	Alarm_2_Fire_Flag =LOW;
 	Alarm_3_Fire_Flag =LOW;
 }
 
 void Nearest_Time_Display(void){
+	LCD_LINE_position(LCD_LINE1,15);
+	LCD_Write_String("TIME:");
 	printAlarm(((UINT8_t)(Current_Time/60)),((UINT8_t)(Current_Time%60)),LCD_LINE2,15);
 	if(usr_def_alarms >0){
 		customSort(alarm_ptr_arr,usr_def_alarms);
 		UINT16_t remaining = alarm_ptr_arr[0].Fire_Time-Current_Time;
+		LCD_LINE_position(LCD_LINE3,15);
+		LCD_Write_String("ALARM");
 		printAlarm(((UINT8_t)remaining/60),((UINT8_t)remaining%60),LCD_LINE4,15);
 	}
 
