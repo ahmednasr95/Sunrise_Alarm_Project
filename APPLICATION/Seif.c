@@ -68,7 +68,7 @@ ERROR_STATE Remove_Alarm(){
 void erase(UINT16_t reading){
 	alarm_ptr_arr[reading-1].minutes=0;
 	alarm_ptr_arr[reading-1].seconds=0;
-	
+	alarm_ptr_arr[reading-1].Fire_Time=0;
 	UINT8_t shift=usr_def_alarms;
 	if(reading==1){
 		UINT8_t shift_index=0;
