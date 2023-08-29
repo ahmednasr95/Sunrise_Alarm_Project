@@ -23,7 +23,7 @@ ERROR_STATE Show_Alarms(){
 			LCD_LINE_position(Rows,1);
 			LCD_Write_String("- ");
 			UINT16_t remaining = alarm_ptr_arr[i].Fire_Time-Current_Time;
-			printAlarm(((UINT8_t)remaining/60),((UINT8_t)remaining%60),Rows,2);
+			printAlarm(((UINT8_t)(remaining/60)),((UINT8_t)(remaining%60)),Rows,2);
 			Rows++;
 			LCD_LINE_position(Rows,0);
 		}

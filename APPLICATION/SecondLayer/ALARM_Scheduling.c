@@ -258,7 +258,7 @@ ERROR_STATE printAlarm(UINT8_t minutes, UINT8_t seconds,LCD_LINES Line_Pos, UINT
 	LCD_LINE_position(Line_Pos, cursor_loc);
 	/*print the alarm*/
 	LCD_Write_Number(minutes / 10);
-	LCD_Write_Number(minutes % 10);
+	LCD_Write_Number(minutes %10);
 	LCD_Write_Character(':');
 	LCD_Write_Number(seconds / 10);
 	LCD_Write_Number(seconds % 10);
