@@ -1,0 +1,85 @@
+#include "ALL_LEDS.h"
+
+volatile bool ACCELERATE = TRUE ,DECELERATE = FALSE;
+volatile UINT8_t OVF_COUNTER = OVF_COUNTER_RESET ,DUTY_CYCLE = MIN_DUTY_CYCLE;
+
+void ALL_LEDS_Initialize(){
+	
+	BLUE_LED_Initializ();
+	RED_LED_Initializ();
+	GREEN_LED_Initializ();
+	YELLOW_LED_Initializ();
+	ALL_LEDS_OFF();
+	Timer0_Initialize();
+	Timer0_STOP();
+}
+void ALL_LEDS_TGL (){
+	BLUE_LED_TGL();
+	RED_LED_TGL();
+	GREEN_LED_TGL();
+	YELLOW_LED_TGL();
+}
+
+void ALL_LEDS_ON (){
+	Timer0_STOP();
+	BLUE_LED_ON();
+	RED_LED_ON();
+	GREEN_LED_ON();
+	YELLOW_LED_ON();
+}
+
+void ALL_LEDS_OFF (){
+	Timer0_STOP();
+	BLUE_LED_OFF();
+	RED_LED_OFF();
+	GREEN_LED_OFF();
+	YELLOW_LED_OFF();
+}
+
+void  ALL_LEDS_dimming(){
+	Timer0_ON();
+}
+void ALL_LEDS_stop_dimming(){
+	Timer0_STOP();
+	ALL_LEDS_OFF();
+	ACCELERATE = TRUE ,DECELERATE = FALSE;
+	OVF_COUNTER = OVF_COUNTER_RESET ,DUTY_CYCLE = MIN_DUTY_CYCLE;
+
+}
+
+ISR(TIMER0_COMP){
+	ALL_LEDS_TGL();
+}
+
+ISR(TIMER0_OVF){
+	if(DUTY_CYCLE >= MAX_DUTY_CYCLE){
+		DECELERATE = TRUE;
+		ACCELERATE = FALSE;
+	}
+	/**/
+	if(DUTY_CYCLE <= MIN_DUTY_CYCLE){
+		ACCELERATE = TRUE;
+		DECELERATE = FALSE;
+	}
+	/**/
+	if(ACCELERATE){
+		if(OVF_COUNTER < OVF_COUNTER_MAX){
+			OVF_COUNTER++;
+		}else{
+			OVF_COUNTER=OVF_COUNTER_RESET;
+			DUTY_CYCLE++;
+			SET_DUTY_CYCLE(DUTY_CYCLE);
+		}
+	}
+	/**/
+	if(DECELERATE){
+		if(OVF_COUNTER < OVF_COUNTER_MAX){
+			OVF_COUNTER++;
+		}else{
+			OVF_COUNTER = OVF_COUNTER_RESET;
+			DUTY_CYCLE--;
+			SET_DUTY_CYCLE(DUTY_CYCLE);
+		}
+	}
+	/**/
+}
