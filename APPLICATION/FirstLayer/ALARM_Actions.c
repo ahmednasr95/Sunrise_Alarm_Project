@@ -53,7 +53,7 @@ void Nearest_Time_Display(void){
 		UINT16_t remaining = alarm_ptr_arr[0].Fire_Time-Current_Time;
 		LCD_LINE_position(LCD_LINE3,15);
 		LCD_Write_String("ALARM");
-		printAlarm(((UINT8_t)remaining/60),((UINT8_t)remaining%60),LCD_LINE4,15);
+		printAlarm(((UINT8_t)(remaining/60)),((UINT8_t)(remaining%60)),LCD_LINE4,15);
 	}
 
 }
