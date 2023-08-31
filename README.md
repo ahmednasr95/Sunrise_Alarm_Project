@@ -1,4 +1,4 @@
-# Kylian_Tech_Alarm
+# Sunrise Alarm Project
 
 ## Team Name: Kylian Tech
 
